@@ -8,13 +8,18 @@
 <h1> HOME PAGE </h1>
 
 {{#restaurant}}
-{{name}}
+{{name}} : {{id}}
 {{/restaurant}}
 
 <form action="/create-restaurant" method="post">
     <input type="text" name="name"/>
     <input type="checkbox" name="isOpen"/>
     <input type="text" name="price"/>
+    <input type="submit"/>
+</form>
+
+<form action="/delete-restaurant" method="post">
+    <input type="text" name="id"/>
     <input type="submit"/>
 </form>
 

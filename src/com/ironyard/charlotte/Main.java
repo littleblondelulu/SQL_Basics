@@ -6,6 +6,7 @@ import spark.Spark;
 import spark.template.mustache.MustacheTemplateEngine;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Main {
@@ -25,9 +26,9 @@ public class Main {
                 "/",
                 ((request, response) -> {
 
-                    HashMap<String, Restaurant> m = new HashMap<>();
-                    Restaurant showmars = new Restaurant("Showmars", true, 10.0);
-                    m.put("restaurant", showmars);
+                    HashMap<String, Object> m = new HashMap<>();
+                    ArrayList<Restaurant> restaurants = selectRestaurants(conn);
+                    m.put("restaurant", restaurants);
                     return new ModelAndView(m, "home.html");
                 }),
 
@@ -51,9 +52,54 @@ public class Main {
                     return "";
                 })
         );
+
+        Spark.post(
+                "/delete-restaurant",
+                ((request, response) -> {
+                    String stringId = request.queryParams("id");
+
+                    int id = Integer.parseInt(stringId);
+                    deleteRestaurant(conn, id);
+
+                    response.redirect("/");
+                    return "";
+                })
+
+        );
+
+        Spark.get(
+                "/edit-restaurant/{{id}}",
+                ((request, response) -> {
+
+                    HashMap<String, Object> m = new HashMap<>();
+                    ArrayList<Restaurant> restaurants = selectRestaurants(conn);
+                    m.put("restaurant", restaurants);
+                    m.put("id", restaurants.get(restaurant.id));
+                    return new ModelAndView(m, "edit.html");
+                }),
+                new MustacheTemplateEngine()
+        );
+
+        Spark.post(
+                "edit-restaurant",
+                ((request, response) -> {
+                    String name = request.queryParams("updateName");
+                    String openOrNot = request.queryParams("updateIsOpen");
+                    String priceString = request.queryParams("updatePrice");
+
+                    boolean isOpen = openOrNot.equals("on");
+                    double price = Double.valueOf(priceString);
+
+                    Restaurant restaurant = new Restaurant(name, isOpen, price);
+                    updateRestaurant(conn, restaurant);
+
+                    response.redirect("/");
+                    return "";
+                })
+        );
+
     }
-
-
+    
 
     // Write a static method insertRestaurant and run it in the /create-restaurant route. It should insert a new row with the user-supplied information.
     public static void insertRestaurant(Connection conn, Restaurant restaurant) throws SQLException {
@@ -64,40 +110,34 @@ public class Main {
         stmt.execute();
     }
 
+    public static void deleteRestaurant(Connection conn, int id) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM restaurants WHERE id = ?");
+        stmt.setInt(1, id);
+        stmt.execute();
+    }
+
     //method that returns all the restaurants from the database -- not sure if this one or the following is correct
-    /*public static ArrayList<Restaurant> selecRestaurants(Connection conn) throws SQLException {
+    public static ArrayList<Restaurant> selectRestaurants(Connection conn) throws SQLException {
         ArrayList<Restaurant> items = new ArrayList<>();
         Statement stmt = conn.createStatement();
         ResultSet results = stmt.executeQuery("SELECT * FROM restaurants");
         while (results.next()) {
             int id = results.getInt("id");
             String name = results.getString("name");
-            boolean isOpen = results.getBoolean("isOpen");
+            boolean isOpen = results.getBoolean("is_open");
             double price = results.getDouble("price");
             items.add(new Restaurant(id, name, isOpen, price));
         }
-        return restaurants;
-    }*/
-
-  /*  private static ArrayList<Restaurant> selectRestaurants(Connection conn, String name, boolean isOpen, double price) throws SQLException {
-        PreparedStatement stmt3 = conn.prepareStatement("SELECT * FROM restaurants");
-        ResultSet results = stmt3.executeQuery();
-        while (results.next()) {
-            String restaurantName = results.getString("name");
-            boolean restaurantIsOpen = results.getBoolean("isOpen");
-            double restaurantPrice = results.getDouble("price");
-            System.out.printf("%s %f\n", restaurantName, restaurantIsOpen, restaurantPrice);
-        }
-
-       // return selectRestaurants();
+        return items;
     }
 
-    //toggle the isOpen value:
-    public static void toggleRestaurants(Connection conn, int id) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("UPDATE restaurants SET isOpen =  NOT isOpen WHERE id = ?");
-        stmt.setInt(1, id);
+    public static void updateRestaurant(Connection conn, Restaurant newRestaurant) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("UPDATE restaurants set name = ?, is_open = ?, price = ? where id = ?");
+        stmt.setString(1, newRestaurant.getName());
+        stmt.setBoolean(2, newRestaurant.isOpen());
+        stmt.setDouble(3, newRestaurant.getPrice());
         stmt.execute();
     }
-*/
+
 
 }

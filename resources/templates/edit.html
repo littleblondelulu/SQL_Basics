@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/edit-restaurant" method="post">
+    <input type="hidden" name="restaurantId" value="{{id}}" />
+    <input type="text" name="updateName"/>
+    <input type="checkbox" name="updateIsOpen"/>
+    <input type="text" name="updatePrice"/>
+    <input type="submit"/>
+</form>
+</body>
+</html>

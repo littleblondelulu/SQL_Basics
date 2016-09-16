@@ -7,9 +7,12 @@
 <body>
 <h1> HOME PAGE </h1>
 
+<ul>
 {{#restaurant}}
-{{name}}
+<li>{{name}} : {{price}} : {{id}}<a href="/edit-restaurant/{{id}}">Edit</a></li>
 {{/restaurant}}
+
+</ul>
 
 <form action="/create-restaurant" method="post">
     <input type="text" name="name"/>
@@ -17,6 +20,12 @@
     <input type="text" name="price"/>
     <input type="submit"/>
 </form>
+
+<form action="/delete-restaurant" method="post">
+    <input type="text" name="id"/>
+    <input type="submit"/>
+</form>
+
 
 </body>
 </html>
