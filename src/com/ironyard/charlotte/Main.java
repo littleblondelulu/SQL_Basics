@@ -68,7 +68,7 @@ public class Main {
         );
 
         Spark.get(
-                "/edit-restaurant/{{id}}",
+                "/edit-restaurant/:id",
                 ((request, response) -> {
 
                     HashMap<String, Object> m = new HashMap<>();
@@ -99,7 +99,7 @@ public class Main {
         );
 
     }
-    
+
 
     // Write a static method insertRestaurant and run it in the /create-restaurant route. It should insert a new row with the user-supplied information.
     public static void insertRestaurant(Connection conn, Restaurant restaurant) throws SQLException {
