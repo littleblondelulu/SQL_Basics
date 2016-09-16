@@ -1,10 +1,12 @@
 package com.ironyard.charlotte;
 
 import org.h2.tools.Server;
+import spark.ModelAndView;
+import spark.Spark;
+import spark.template.mustache.MustacheTemplateEngine;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.HashMap;
 
 public class Main {
 
@@ -17,69 +19,54 @@ public class Main {
         Statement stmt = conn.createStatement();
         stmt.execute("CREATE TABLE IF NOT EXISTS restaurants (id IDENTITY, name VARCHAR, is_open BOOLEAN, price DOUBLE)");
 
-        Scanner scanner = new Scanner();
+        Spark.init();
 
+        Spark.get(
+                "/",
+                ((request, response) -> {
 
-        while (true) {
-            System.out.println("1. Create restaurants item");
-            System.out.println("2. Toggle restaurants isOpen");
-            System.out.println("3. List restaurants items");
+                    HashMap<String, Restaurant> m = new HashMap<>();
+                    Restaurant showmars = new Restaurant("Showmars", true, 10.0);
+                    m.put("restaurant", showmars);
+                    return new ModelAndView(m, "home.html");
+                }),
 
-            String option = scanner.nextLine();
+                new MustacheTemplateEngine()
+        );
 
-            if (option.equals("1")) {
-                System.out.println("Enter your restaurant:");
-                String text = scanner.nextLine();
+        Spark.post(
+                "/create-restaurant",
+                ((request, response) -> {
+                    String name = request.queryParams("name");
+                    String openOrNot = request.queryParams("isOpen");
+                    String priceString = request.queryParams("price");
 
-                //Restaurants restaurants = new Restaurants(int id, String name, boolean isOpen, double price);
-                //restaurants.add(restaurant);
-                insertRestaurant(conn, name, isOpen, price);
-            }
+                    boolean isOpen = openOrNot.equals("on");
+                    double price = Double.valueOf(priceString);
 
-           /*
-            else if (option.equals("2")) {
-                System.out.println("Enter the number of the restaurant you want to toggle:");
-                int itemNum = Integer.valueOf(scanner.nextLine());
-                //Restaurants restaurant = restaurants.get(itemNum-1);
-                //restaurant.isOpen = !restaurant.isOpen;
-                toggleToDo(conn, itemNum);
-            }
+                    Restaurant restaurant = new Restaurant(name, isOpen, price);
+                    insertRestaurant(conn, restaurant);
 
-            */
-
-            else if (option.equals("3")) {
-                ArrayList<Restaurants> restaurants = selectRestaurants(conn);
-                //int i = 1;
-                for (Restaurants restaurant : restaurants) {
-                    String checkbox = "[ ]";
-                    if (restaurant.isOpen) {
-                        checkbox = "[x]";
-                    }
-                    System.out.printf("%s %d. %s\n", restaurant.name, restaurant.isOpen, restaurant.price);
-                    //i++;
-                }
-            }
-            else {
-                System.out.println("Invalid option");
-            }
-        }
-
+                    response.redirect("/");
+                    return "";
+                })
+        );
     }
 
 
 
     // Write a static method insertRestaurant and run it in the /create-restaurant route. It should insert a new row with the user-supplied information.
-    public static void insertRestaurant(Connection conn, String name, boolean isOpen, double price) throws SQLException {
+    public static void insertRestaurant(Connection conn, Restaurant restaurant) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO restaurants VALUES (NULL, ?, ?, ?)");
-        stmt.setString(1, name);
-        stmt.setBoolean(2, isOpen);
-        stmt.setDouble(3, price);
+        stmt.setString(1, restaurant.getName());
+        stmt.setBoolean(2, restaurant.isOpen());
+        stmt.setDouble(3, restaurant.getPrice());
         stmt.execute();
     }
 
     //method that returns all the restaurants from the database -- not sure if this one or the following is correct
-    /*public static ArrayList<Restaurants> selecRestaurants(Connection conn) throws SQLException {
-        ArrayList<Restaurants> items = new ArrayList<>();
+    /*public static ArrayList<Restaurant> selecRestaurants(Connection conn) throws SQLException {
+        ArrayList<Restaurant> items = new ArrayList<>();
         Statement stmt = conn.createStatement();
         ResultSet results = stmt.executeQuery("SELECT * FROM restaurants");
         while (results.next()) {
@@ -87,12 +74,12 @@ public class Main {
             String name = results.getString("name");
             boolean isOpen = results.getBoolean("isOpen");
             double price = results.getDouble("price");
-            items.add(new Restaurants(id, name, isOpen, price));
+            items.add(new Restaurant(id, name, isOpen, price));
         }
         return restaurants;
     }*/
 
-    private static ArrayList<Restaurants> selectRestaurants(Connection conn, String name, boolean isOpen, double price) throws SQLException {
+  /*  private static ArrayList<Restaurant> selectRestaurants(Connection conn, String name, boolean isOpen, double price) throws SQLException {
         PreparedStatement stmt3 = conn.prepareStatement("SELECT * FROM restaurants");
         ResultSet results = stmt3.executeQuery();
         while (results.next()) {
@@ -102,7 +89,7 @@ public class Main {
             System.out.printf("%s %f\n", restaurantName, restaurantIsOpen, restaurantPrice);
         }
 
-        return selectRestaurants();
+       // return selectRestaurants();
     }
 
     //toggle the isOpen value:
@@ -111,6 +98,6 @@ public class Main {
         stmt.setInt(1, id);
         stmt.execute();
     }
-
+*/
 
 }
