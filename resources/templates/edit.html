@@ -5,12 +5,16 @@
     <title>Title</title>
 </head>
 <body>
+
+{{#restaurants}}
 <form action="/edit-restaurant" method="post">
     <input type="hidden" name="restaurantId" value="{{id}}" />
-    <input type="text" name="updateName"/>
-    <input type="checkbox" name="updateIsOpen"/>
-    <input type="text" name="updatePrice"/>
+    <input type="text" placeholder="Update name" name="updateName"/>
+    <input type="checkbox" placeholder="Is open?" name="updateIsOpen"/>
+    <input type="text" placeholder="Update price" name="updatePrice"/>
     <input type="submit"/>
 </form>
+{{/restaurants}}
+
 </body>
 </html>

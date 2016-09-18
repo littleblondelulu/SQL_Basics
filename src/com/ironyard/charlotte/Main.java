@@ -25,7 +25,6 @@ public class Main {
         Spark.get(
                 "/",
                 ((request, response) -> {
-
                     HashMap<String, Object> m = new HashMap<>();
                     ArrayList<Restaurant> restaurants = selectRestaurants(conn);
                     m.put("restaurant", restaurants);
@@ -71,24 +70,34 @@ public class Main {
                 "/edit-restaurant/:id",
                 ((request, response) -> {
 
+                    String stringId = request.params("id");
+                    int id = Integer.parseInt(stringId);
+
                     HashMap<String, Object> m = new HashMap<>();
                     ArrayList<Restaurant> restaurants = selectRestaurants(conn);
-                    m.put("restaurant", restaurants);
-                    m.put("id", restaurants.get(restaurant.id));
+                    Restaurant restaurant = null;
+                    for(int i = 0; i < restaurants.size(); i++){
+                        if(restaurants.get(i).getId() == id){
+                            restaurant = restaurants.get(i);
+                            break;
+                        }
+                    }
+                    m.put("restaurant", restaurant);
                     return new ModelAndView(m, "edit.html");
                 }),
+
                 new MustacheTemplateEngine()
         );
 
         Spark.post(
-                "edit-restaurant",
+                "/edit-restaurant",
                 ((request, response) -> {
                     String name = request.queryParams("updateName");
                     String openOrNot = request.queryParams("updateIsOpen");
                     String priceString = request.queryParams("updatePrice");
 
-                    boolean isOpen = openOrNot.equals("on");
                     double price = Double.valueOf(priceString);
+                    boolean isOpen = openOrNot.equals("on");
 
                     Restaurant restaurant = new Restaurant(name, isOpen, price);
                     updateRestaurant(conn, restaurant);
@@ -136,6 +145,7 @@ public class Main {
         stmt.setString(1, newRestaurant.getName());
         stmt.setBoolean(2, newRestaurant.isOpen());
         stmt.setDouble(3, newRestaurant.getPrice());
+        stmt.setInt(4, newRestaurant.getId());
         stmt.execute();
     }
 
