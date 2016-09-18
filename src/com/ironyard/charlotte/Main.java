@@ -95,9 +95,11 @@ public class Main {
                     String name = request.queryParams("updateName");
                     String openOrNot = request.queryParams("updateIsOpen");
                     String priceString = request.queryParams("updatePrice");
+                    String stringId= request.queryParams("restaurantId");
 
                     double price = Double.valueOf(priceString);
                     boolean isOpen = openOrNot.equals("on");
+                    int id = Integer.valueOf(stringId);
 
                     Restaurant restaurant = new Restaurant(name, isOpen, price);
                     updateRestaurant(conn, restaurant);

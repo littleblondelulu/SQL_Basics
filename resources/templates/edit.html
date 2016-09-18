@@ -7,7 +7,7 @@
 <body>
 
 {{#restaurants}}
-<form action="/edit-restaurant" method="post">
+<form action="/edit-restaurant:id" method="post">
     <input type="hidden" name="restaurantId" value="{{id}}" />
     <input type="text" placeholder="Update name" name="updateName"/>
     <input type="checkbox" placeholder="Is open?" name="updateIsOpen"/>
