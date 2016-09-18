@@ -7,21 +7,25 @@
 <body>
 <h1> HOME PAGE </h1>
 
+<ul>
 {{#restaurant}}
-{{name}} : {{id}}
+<li>{{name}} : {{price}} : {{id}}<a href="/edit-restaurant/{{id}}">Edit</a></li>
 {{/restaurant}}
 
+</ul>
+
 <form action="/create-restaurant" method="post">
-    <input type="text" name="name"/>
-    <input type="checkbox" name="isOpen"/>
-    <input type="text" name="price"/>
+    <input type="text" placeholder="Type name" name="name"/>
+    <input type="checkbox" placeholder="Is open?" name="isOpen"/>
+    <input type="text" placeholder="Enter price" name="price"/>
     <input type="submit"/>
 </form>
 
 <form action="/delete-restaurant" method="post">
-    <input type="text" name="id"/>
+    <input type="text"placeholder="ID to delete" name="id"/>
     <input type="submit"/>
 </form>
+
 
 </body>
 </html>
