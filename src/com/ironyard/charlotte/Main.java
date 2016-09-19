@@ -63,7 +63,6 @@ public class Main {
                     response.redirect("/");
                     return "";
                 })
-
         );
 
         Spark.get(
@@ -111,7 +110,6 @@ public class Main {
 
     }
 
-
     // Write a static method insertRestaurant and run it in the /create-restaurant route. It should insert a new row with the user-supplied information.
     public static void insertRestaurant(Connection conn, Restaurant restaurant) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO restaurants VALUES (NULL, ?, ?, ?)");
@@ -150,6 +148,4 @@ public class Main {
         stmt.setInt(4, newRestaurant.getId());
         stmt.execute();
     }
-
-
 }
