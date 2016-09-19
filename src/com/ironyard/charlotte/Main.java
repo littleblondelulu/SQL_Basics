@@ -66,7 +66,6 @@ public class Main {
 
         );
 
-        //Still nothing is showing up on my edit.html template... I'm not sure what's going on there
         Spark.get(
                 "/edit-restaurant/:id",
                 ((request, response) -> {

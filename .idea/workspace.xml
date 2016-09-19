@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="01e356a3-7fab-4048-941f-abf379c81bfd" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ironyard/charlotte/Main.java" afterPath="$PROJECT_DIR$/src/com/ironyard/charlotte/Main.java" />
     </list>
     <ignored path="SQL_Basics.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,17 +29,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/ironyard/charlotte/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1410">
-              <caret line="101" column="55" selection-start-line="101" selection-start-column="55" selection-end-line="101" selection-end-column="55" />
+            <state relative-caret-position="915">
+              <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="home.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/templates/home.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="165">
@@ -111,7 +112,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="102" />
-    <option name="y" value="70" />
+    <option name="y" value="23" />
     <option name="width" value="1228" />
     <option name="height" value="843" />
   </component>
@@ -547,11 +548,18 @@
       <option name="project" value="LOCAL" />
       <updated>1474249131929</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="final update">
+      <created>1474249138644</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1474249138644</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="102" y="70" width="1228" height="843" extended-state="0" />
+    <frame x="102" y="23" width="1228" height="843" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -676,10 +684,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/templates/home.html">
+    <entry file="file://$PROJECT_DIR$/src/com/ironyard/charlotte/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="65" selection-start-line="11" selection-start-column="60" selection-end-line="11" selection-end-column="65" />
+        <state relative-caret-position="915">
+          <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -692,10 +700,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ironyard/charlotte/Main.java">
+    <entry file="file://$PROJECT_DIR$/resources/templates/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1410">
-          <caret line="101" column="55" selection-start-line="101" selection-start-column="55" selection-end-line="101" selection-end-column="55" />
+        <state relative-caret-position="165">
+          <caret line="11" column="65" selection-start-line="11" selection-start-column="60" selection-end-line="11" selection-end-column="65" />
           <folding />
         </state>
       </provider>
