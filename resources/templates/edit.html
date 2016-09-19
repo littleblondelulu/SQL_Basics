@@ -6,15 +6,15 @@
 </head>
 <body>
 
-{{#restaurants}}
-<form action="/edit-restaurant:id" method="post">
+{{#restaurant}}
+<form action="/edit-restaurant" method="post">
     <input type="hidden" name="restaurantId" value="{{id}}" />
     <input type="text" placeholder="Update name" name="updateName"/>
     <input type="checkbox" placeholder="Is open?" name="updateIsOpen"/>
     <input type="text" placeholder="Update price" name="updatePrice"/>
     <input type="submit"/>
 </form>
-{{/restaurants}}
+{{/restaurant}}
 
 </body>
 </html>

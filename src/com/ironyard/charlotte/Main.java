@@ -66,6 +66,7 @@ public class Main {
 
         );
 
+        //Still nothing is showing up on my edit.html template... I'm not sure what's going on there
         Spark.get(
                 "/edit-restaurant/:id",
                 ((request, response) -> {
@@ -98,10 +99,10 @@ public class Main {
                     String stringId= request.queryParams("restaurantId");
 
                     double price = Double.valueOf(priceString);
-                    boolean isOpen = openOrNot.equals("on");
+                    boolean isOpen = openOrNot != null;
                     int id = Integer.valueOf(stringId);
 
-                    Restaurant restaurant = new Restaurant(name, isOpen, price);
+                    Restaurant restaurant = new Restaurant(id, name, isOpen, price);
                     updateRestaurant(conn, restaurant);
 
                     response.redirect("/");
